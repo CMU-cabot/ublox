@@ -469,25 +469,25 @@ void UbloxNode::getRosParams() {
 
   // Create publishers based on parameters
   if (getRosBoolean(this, "publish.nav.status")) {
-    nav_status_pub_ = this->create_publisher<ublox_msgs::msg::NavSTATUS>("navstatus", 1);
+    nav_status_pub_ = this->create_publisher<ublox_msgs::msg::NavSTATUS>("~/navstatus", 1);
   }
   if (getRosBoolean(this, "publish.nav.posecef")) {
-    nav_posecef_pub_ = this->create_publisher<ublox_msgs::msg::NavPOSECEF>("navposecef", 1);
+    nav_posecef_pub_ = this->create_publisher<ublox_msgs::msg::NavPOSECEF>("~/navposecef", 1);
   }
   if (getRosBoolean(this, "publish.nav.cov")) {
-    nav_cov_pub_ = this->create_publisher<ublox_msgs::msg::NavCOV>("navcov", 1);
+    nav_cov_pub_ = this->create_publisher<ublox_msgs::msg::NavCOV>("~/navcov", 1);
   }
   if (getRosBoolean(this, "publish.nav.clock")) {
-    nav_clock_pub_ = this->create_publisher<ublox_msgs::msg::NavCLOCK>("navclock", 1);
+    nav_clock_pub_ = this->create_publisher<ublox_msgs::msg::NavCLOCK>("~/navclock", 1);
   }
   if (getRosBoolean(this, "publish.aid.alm")) {
-    aid_alm_pub_ = this->create_publisher<ublox_msgs::msg::AidALM>("aidalm", 1);
+    aid_alm_pub_ = this->create_publisher<ublox_msgs::msg::AidALM>("~/aidalm", 1);
   }
   if (getRosBoolean(this, "publish.aid.eph")) {
-    aid_eph_pub_ = this->create_publisher<ublox_msgs::msg::AidEPH>("aideph", 1);
+    aid_eph_pub_ = this->create_publisher<ublox_msgs::msg::AidEPH>("~/aideph", 1);
   }
   if (getRosBoolean(this, "publish.aid.hui")) {
-    aid_hui_pub_ = this->create_publisher<ublox_msgs::msg::AidHUI>("aidhui", 1);
+    aid_hui_pub_ = this->create_publisher<ublox_msgs::msg::AidHUI>("~/aidhui", 1);
   }
 
   // Create subscriber for RTCM correction data to enable RTK
