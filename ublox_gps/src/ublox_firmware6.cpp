@@ -53,7 +53,7 @@ UbloxFirmware6::UbloxFirmware6(const std::string & frame_id, std::shared_ptr<dia
   }
   if (getRosBoolean(node_, "publish.nav.svinfo")) {
     nav_svinfo_pub_ =
-      node_->create_publisher<ublox_msgs::msg::NavSVINFO>("navinfo", 1);
+      node_->create_publisher<ublox_msgs::msg::NavSVINFO>("navsvinfo", 1);
   }
   if (getRosBoolean(node_, "publish.mon.hw")) {
     mon_hw_pub_ =
