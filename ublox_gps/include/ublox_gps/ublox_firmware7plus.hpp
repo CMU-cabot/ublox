@@ -180,12 +180,12 @@ class UbloxFirmware7Plus : public UbloxFirmware {
 
     // If fix not ok (w/in DOP & Accuracy Masks), raise the diagnostic level
     if (!(last_nav_pvt_.flags & ublox_msgs::msg::NavPVT::FLAGS_GNSS_FIX_OK)) {
-      stat.level = diagnostic_msgs::msg::DiagnosticStatus::WARN;
+      stat.level = fix_not_ok_error_level_;
       stat.message += ", fix not ok";
     }
     // Raise diagnostic level to error if no fix
     if (last_nav_pvt_.fix_type == ublox_msgs::msg::NavPVT::FIX_TYPE_NO_FIX) {
-      stat.level = diagnostic_msgs::msg::DiagnosticStatus::ERROR;
+      stat.level = no_fix_error_level_;
       stat.message = "No fix";
     }
 
@@ -218,6 +218,10 @@ class UbloxFirmware7Plus : public UbloxFirmware {
 
   std::string frame_id_;
   std::shared_ptr<FixDiagnostic> freq_diag_;
+
+  // Diagnostics
+  uint8_t fix_not_ok_error_level_ = diagnostic_msgs::msg::DiagnosticStatus::WARN;
+  uint8_t no_fix_error_level_ = diagnostic_msgs::msg::DiagnosticStatus::ERROR;
 };
 
 }  // namespace ublox_node

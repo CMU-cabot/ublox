@@ -34,6 +34,10 @@ void UbloxFirmware8::getRosParams() {
   enable_glonass_ = getRosBoolean(node_, "gnss.glonass");
   enable_qzss_ = getRosBoolean(node_, "gnss.qzss");
 
+  // Diagnostics
+  getRosUint(node_, "fix_not_ok_error_level", fix_not_ok_error_level_, diagnostic_msgs::msg::DiagnosticStatus::WARN);
+  getRosUint(node_, "no_fix_error_level", no_fix_error_level_, diagnostic_msgs::msg::DiagnosticStatus::ERROR);
+
   // QZSS Signal Configuration
   getRosUint(node_, "gnss.qzss_sig_cfg", qzss_sig_cfg_,
               ublox_msgs::msg::CfgGNSSBlock::SIG_CFG_QZSS_L1CA);

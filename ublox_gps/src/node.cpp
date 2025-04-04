@@ -280,10 +280,13 @@ void UbloxNode::getRosParams() {
 
   nav_rate_ = declareRosIntParameter<uint16_t>(this, "nav_rate", 1);  // # of measurement rate cycles
 
+  // Diagnostics
   ignore_fix_timestamp_ = this->declare_parameter("ignore_fix_timestamp", false);
   fix_frequency_tolerance_ = this->declare_parameter("fix_frequency_tolerance", kFixFreqTol);
   fix_frequency_window_ = this->declare_parameter("fix_frequency_window", kFixFreqWindow);
   timestamp_status_min_ = this->declare_parameter("timestamp_status_min", kTimeStampStatusMin);
+  this->declare_parameter("fix_not_ok_error_level", 1);  // WARN
+  this->declare_parameter("no_fix_error_level", 2);  // ERROR
 
   // RTCM params
   this->declare_parameter("rtcm.ids", rclcpp::PARAMETER_INTEGER_ARRAY);
