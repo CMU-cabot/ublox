@@ -280,6 +280,11 @@ void UbloxNode::getRosParams() {
 
   nav_rate_ = declareRosIntParameter<uint16_t>(this, "nav_rate", 1);  // # of measurement rate cycles
 
+  ignore_fix_timestamp_ = this->declare_parameter("ignore_fix_timestamp", false);
+  fix_frequency_tolerance_ = this->declare_parameter("fix_frequency_tolerance", kFixFreqTol);
+  fix_frequency_window_ = this->declare_parameter("fix_frequency_window", kFixFreqWindow);
+  timestamp_status_min_ = this->declare_parameter("timestamp_status_min", kTimeStampStatusMin);
+
   // RTCM params
   this->declare_parameter("rtcm.ids", rclcpp::PARAMETER_INTEGER_ARRAY);
   this->declare_parameter("rtcm.rates", rclcpp::PARAMETER_INTEGER_ARRAY);
@@ -888,8 +893,10 @@ void UbloxNode::initialize() {
   getRosParams();
 
   // configure diagnostic updater for frequency
-  freq_diag_ = std::make_shared<FixDiagnostic>(std::string("fix"), kFixFreqTol,
-                                               kFixFreqWindow, kTimeStampStatusMin, nav_rate_, meas_rate_, updater_);
+  freq_diag_ = std::make_shared<FixDiagnostic>(std::string("fix"), fix_frequency_tolerance_,
+                                               fix_frequency_window_, timestamp_status_min_, nav_rate_, meas_rate_,
+                                               ignore_fix_timestamp_,
+                                               updater_);
 
 
   initializeIo();

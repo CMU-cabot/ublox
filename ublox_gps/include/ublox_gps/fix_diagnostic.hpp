@@ -1,6 +1,7 @@
 #ifndef UBLOX_GPS_FIX_DIAGNOSTIC_HPP
 #define UBLOX_GPS_FIX_DIAGNOSTIC_HPP
 
+#include <limits>
 #include <memory>
 #include <string>
 
@@ -20,9 +21,11 @@ public:
    * @param freq_tol the tolerance [%] for the topic frequency
    * @param freq_window the number of messages to use for diagnostic statistics
    * @param stamp_min the minimum allowed time delay
+   * @param ignore_fix_timestamp ignores header timestamp in diagnostics
    */
   explicit FixDiagnostic(const std::string & name, double freq_tol, int freq_window,
                          double stamp_min, uint16_t nav_rate, uint16_t meas_rate,
+                         bool ignore_fix_timestamp,
                          std::shared_ptr<diagnostic_updater::Updater> updater) {
     const double target_freq = 1.0 / (meas_rate * 1e-3 * nav_rate); // Hz
     min_freq = target_freq;
@@ -30,6 +33,9 @@ public:
     diagnostic_updater::FrequencyStatusParam freq_param(&min_freq, &max_freq,
                                                         freq_tol, freq_window);
     double stamp_max = meas_rate * 1e-3 * (1 + freq_tol);
+    if(ignore_fix_timestamp){
+      stamp_max = std::numeric_limits<double>::max();
+    }
     diagnostic_updater::TimeStampStatusParam time_param(stamp_min, stamp_max);
     diagnostic = std::make_shared<diagnostic_updater::TopicDiagnostic>(name,
                                                                        *updater,

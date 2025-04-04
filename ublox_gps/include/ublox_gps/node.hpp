@@ -289,6 +289,11 @@ class UbloxNode final : public rclcpp::Node {
   //! fix frequency diagnostic updater
   std::shared_ptr<FixDiagnostic> freq_diag_;
 
+  bool ignore_fix_timestamp_;
+  double fix_frequency_tolerance_;
+  double fix_frequency_window_;
+  double timestamp_status_min_;
+
   std::vector<ublox_gps::Rtcm> rtcms_;
 
   //! Which GNSS are supported by the device
