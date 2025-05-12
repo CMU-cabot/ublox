@@ -285,6 +285,8 @@ void UbloxNode::getRosParams() {
   fix_frequency_tolerance_ = this->declare_parameter("fix_frequency_tolerance", kFixFreqTol);
   fix_frequency_window_ = this->declare_parameter("fix_frequency_window", kFixFreqWindow);
   timestamp_status_min_ = this->declare_parameter("timestamp_status_min", kTimeStampStatusMin);
+  this->declare_parameter("dead_reckoning_only_error_level", 1);  // WARN
+  this->declare_parameter("fix_2d_error_level", 1);  // WARN
   this->declare_parameter("fix_not_ok_error_level", 1);  // WARN
   this->declare_parameter("no_fix_error_level", 2);  // ERROR
 

@@ -35,6 +35,8 @@ void UbloxFirmware8::getRosParams() {
   enable_qzss_ = getRosBoolean(node_, "gnss.qzss");
 
   // Diagnostics
+  getRosUint(node_, "dead_reckoning_only_error_level", dead_reckoning_only_error_level_, diagnostic_msgs::msg::DiagnosticStatus::WARN);
+  getRosUint(node_, "fix_2d_error_level", fix_2d_error_level_, diagnostic_msgs::msg::DiagnosticStatus::WARN);
   getRosUint(node_, "fix_not_ok_error_level", fix_not_ok_error_level_, diagnostic_msgs::msg::DiagnosticStatus::WARN);
   getRosUint(node_, "no_fix_error_level", no_fix_error_level_, diagnostic_msgs::msg::DiagnosticStatus::ERROR);
 

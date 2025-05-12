@@ -149,10 +149,10 @@ class UbloxFirmware7Plus : public UbloxFirmware {
     // check the last message, convert to diagnostic
     if (last_nav_pvt_.fix_type ==
         ublox_msgs::msg::NavPVT::FIX_TYPE_DEAD_RECKONING_ONLY) {
-      stat.level = diagnostic_msgs::msg::DiagnosticStatus::WARN;
+      stat.level = dead_reckoning_only_error_level_;
       stat.message = "Dead reckoning only";
     } else if (last_nav_pvt_.fix_type == ublox_msgs::msg::NavPVT::FIX_TYPE_2D) {
-      stat.level = diagnostic_msgs::msg::DiagnosticStatus::WARN;
+      stat.level = fix_2d_error_level_;
       stat.message = "2D fix";
     } else if (last_nav_pvt_.fix_type == ublox_msgs::msg::NavPVT::FIX_TYPE_3D) {
       stat.level = diagnostic_msgs::msg::DiagnosticStatus::OK;
@@ -220,6 +220,8 @@ class UbloxFirmware7Plus : public UbloxFirmware {
   std::shared_ptr<FixDiagnostic> freq_diag_;
 
   // Diagnostics
+  uint8_t dead_reckoning_only_error_level_ = diagnostic_msgs::msg::DiagnosticStatus::WARN;
+  uint8_t fix_2d_error_level_ = diagnostic_msgs::msg::DiagnosticStatus::WARN;
   uint8_t fix_not_ok_error_level_ = diagnostic_msgs::msg::DiagnosticStatus::WARN;
   uint8_t no_fix_error_level_ = diagnostic_msgs::msg::DiagnosticStatus::ERROR;
 };
