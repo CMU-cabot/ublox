@@ -41,6 +41,7 @@
 #include <ublox_msgs/msg/cfg_cfg.hpp>
 #include <ublox_msgs/msg/cfg_dat.hpp>
 #include <ublox_msgs/msg/inf.h>
+#include <ublox_msgs/srv/send_cfg_rst.hpp>
 #include <rtcm_msgs/msg/message.hpp>
 #include <nmea_msgs/msg/sentence.hpp>
 // Ublox GPS includes
@@ -208,6 +209,12 @@ class UbloxNode final : public rclcpp::Node {
    */
   void configureInf();
 
+  /**
+   * @brief Service to send CfgRST message
+   */
+  void sendCfgRST(const std::shared_ptr<ublox_msgs::srv::SendCfgRST::Request> request,
+                  std::shared_ptr<ublox_msgs::srv::SendCfgRST::Response> response);
+
   //! The u-blox node components
   /*!
    * The node will call the functions in these interfaces for each object
@@ -304,6 +311,9 @@ class UbloxNode final : public rclcpp::Node {
 
   rclcpp::TimerBase::SharedPtr keep_alive_;
   rclcpp::TimerBase::SharedPtr poller_;
+
+  //! Service to send CfgRST message
+  rclcpp::Service<ublox_msgs::srv::SendCfgRST>::SharedPtr send_cfg_rst_service_;
 };
 
 }  // namespace ublox_node

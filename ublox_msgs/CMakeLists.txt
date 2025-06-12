@@ -101,8 +101,13 @@ set(msg_files
   "msg/UpdSOS.msg"
 )
 
+set(srv_files
+  "srv/SendCfgRST.srv"
+)
+
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
+  ${srv_files}
   DEPENDENCIES
     sensor_msgs
     std_msgs

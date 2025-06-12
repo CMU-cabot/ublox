@@ -856,6 +856,11 @@ void UbloxNode::configureInf() {
   }
 }
 
+void UbloxNode::sendCfgRST(const std::shared_ptr<ublox_msgs::srv::SendCfgRST::Request> request,
+                std::shared_ptr<ublox_msgs::srv::SendCfgRST::Response> response){
+  response->success = gps_->configReset(request->nav_bbr_mask, request->reset_mode);
+}
+
 void UbloxNode::initializeIo() {
   gps_->setConfigOnStartup(getRosBoolean(this, "config_on_startup"));
 
@@ -923,6 +928,10 @@ void UbloxNode::initialize() {
     RCLCPP_INFO(this->get_logger(), "U-Blox configured successfully.");
     // Subscribe to all U-Blox messages
     subscribe();
+    // Service
+    send_cfg_rst_service_ = this->create_service<ublox_msgs::srv::SendCfgRST>(
+                                "~/send_cfg_rst",
+                                std::bind(&UbloxNode::sendCfgRST, this, std::placeholders::_1, std::placeholders::_2));
     // Configure INF messages (needs INF params, call after subscribing)
     configureInf();
 
